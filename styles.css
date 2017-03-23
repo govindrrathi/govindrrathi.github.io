@@ -1,0 +1,208 @@
+/* You can add global styles to this file, and also import other style files */
+
+/********** Sticky footer ***************/
+/*see also app.component.css*/
+
+app-root {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+/********** Common properties ***************/
+.sr-link {
+  cursor: pointer;
+}
+
+.sr-justify {
+  text-align: justify;
+}
+
+.sr-bold {
+  font-weight: bold !important;
+}
+
+.sr-italic {
+  font-style: italic;
+}
+
+.sr-error-msg {
+  color: #F44336;
+  font-size: 0.9em;
+}
+.fixed-layout-table{
+  table-layout: fixed;
+}
+.fixed-layout-table td {
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.sr-required-notif{
+  color: #F44336;
+  font-size: 0.8em;
+}
+
+.sr-required-mark{
+color: #ff0000; /* red */
+}
+
+.sr-padding-required-text{
+padding-left: 3rem;
+}
+
+
+.btn-floating i {
+     font-size: 18px;
+}
+
+/****************** Input Error ********************/
+
+.sr-has-error input, .sr-has-error textarea{
+	border-bottom: 1px solid #F44336 !important; /* red */
+	box-shadow: 0 1px 0 0 #F44336 !important;
+
+}
+.sr-has-error, .sr-error-area{
+	color: #F44336 !important;
+	font-size: 0.9em !important;
+}
+
+/****************** Tabs ********************/
+
+.tabs {
+  background-color: #eeeeee ! important;
+}
+
+.tab > a {
+  color: #039be5 !important;
+  overflow: visible !important;
+}
+
+.tab a.active {
+  color: #039be5 !important;
+  background-color: white !important;
+}
+
+.tabs .indicator {
+  background-color:#039be5 !important;
+  bottom: auto !important;
+}
+
+.tabs .tab {
+  border:1px solid rgba(40,44,42,0.1);
+  border-bottom: none !important;
+}
+
+/******* ng2-notification Component *********/
+
+.simple-notification.error,
+.simple-notification.success,
+.simple-notification.alert{
+  background: #f5f5f5 !important;
+  border: solid 1px #e0e0e0;
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
+}
+
+.simple-notification.error .sn-content, .simple-notification.success .sn-content , .simple-notification.alert .sn-content  {
+  color: #757575;
+  font-size: 15px !important;
+}
+
+.simple-notification.error .sn-title {
+  color: #f44336;
+  font-size: 17px !important;
+}
+
+.simple-notification.success .sn-title {
+  color: #238027;
+  font-size: 17px !important;
+}
+
+.simple-notification.alert .sn-title {
+  color: #ceaa2b;
+  font-size: 17px !important;
+}
+
+.simple-notification.error svg {
+  fill: rgba(244, 67, 54, 0.53) !important;
+}
+
+.simple-notification.success svg {
+  fill: rgba(76, 175, 80, 0.68) !important;
+}
+
+.simple-notification.alert svg {
+  fill: rgba(220, 176, 19, 0.6) !important;
+}
+
+/******* ng2-pagination Component *********/
+
+.ng2-pagination li {
+  cursor: pointer;
+}
+
+
+/************** Map Component ***************/
+
+.jvectormap-tip {
+  z-index: 1005;
+}
+
+
+/************** Loading bar Component ***************/
+
+.slim-loading-bar-progress {
+  position: fixed;
+  z-index: 1003;
+  background-color:#77b6ff!important;
+  color: #77b6ff!important;
+  height: 3px!important;
+  box-shadow: 0 0 10px rgba(119,182,255,0.7)!important;
+}
+.sr-custom-table-row td{
+  margin:0;
+  border:0;
+  padding: 0.5% 0 0.5% 0;
+}
+
+/************** load img notes ***************/
+
+.sr-img-guidelines {
+  font-size: 9pt;
+  font-style: italic;
+  text-align: left;
+}
+
+/************** Responsive small screen for Forms ***************/
+@media only screen and (max-width: 450px) {
+  .input-field label {
+  top: -0.4rem !important;
+  }
+
+  .input-field label.active {
+    transform: translateY(-70%) !important;
+    font-size: 0.9rem;
+  }
+
+  .sr-required-notif {
+  padding-bottom: 1em;
+  }
+}
+
+  
+/************** Index.html CSS Properties ***************/
+ .spinner-container {
+	width: 100%;
+
+	/* Vertical Center */
+	position: fixed;
+	top: 50%;
+}
+.spinner-layer {
+	border-color: black !important; 
+}

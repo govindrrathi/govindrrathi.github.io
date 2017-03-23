@@ -1,1 +1,259 @@
-"Hello World" 
+<html>
+<head>
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<link href="favicon.ico" rel="icon" type="image/x-icon">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+  <script src="header.component.css"></script>
+  <script src="styles.css"></script>
+</head>
+<body>
+<div id="header">
+	<nav>
+		<div class="nav-wrapper accent-1">
+			<div class="left-align logo-img-wrapper">
+				<a [routerLink]="['/']" class="brand-logo">
+					{{ 'UNIVERSAL-SMARTRESPONSE' | translate }}
+				</a>
+
+				<img class="logo_img hide-on-med-and-down" src="assets/images/logo.png">
+
+				<a
+					class="right header-right-text"
+					target="_blank"
+					href="http://disasteraccountability.org/">
+					{{ 'HeaderComponent-INITIATIVE_OF_DAP' | translate }}
+				</a>
+			</div>
+
+			<a
+					*ngFor="let doesCloseOnClick of closeOnClick"
+
+					materialize="sideNav"
+					[materializeParams]="[{menuWidth: 250, closeOnClick: doesCloseOnClick}]"
+					href="#"
+					data-activates="dashboard-nav"
+					class="button-collapse">
+				<i class="material-icons">menu</i>
+			</a>
+
+		</div>
+	</nav>
+</div>
+
+<ul
+		*ngFor="let doesCloseOnClick of closeOnClick"
+		class="side-nav fixed grey lighten-4"
+		id="dashboard-nav">
+
+	<template [ngIf]="!authService.isLoggedIn">
+		<a
+				target="_blank"
+				href="http://www.disasteraccountability.org/donate"
+				class="donate-button btn yellow black-text">
+			{{ 'SideNavComponent-DONATE_BUTTON' | translate }}
+		</a>
+
+		<a target="_blank" class="subscribe-button btn grey lighten-2 grey-text text-darken-2"
+			   href="http://visitor.r20.constantcontact.com/manage/optin/ea?v=001RgvbKVLa7a4j-BUVDt8Bfw%3D%3D">
+				{{ 'HeaderComponent-SUBSCRIBE_LINK' | translate }}
+		</a>
+
+		<li  routerLinkActive="active"
+			[routerLinkActiveOptions]="{ exact: true }">
+			<a class="no-padding" [routerLink]="['/login']" >
+				<i class="header-icon material-icons icon-padding left-align">account_circle</i>
+				{{ 'HeaderComponent-LOGIN_LINK' | translate }}
+			</a>
+		</li>
+		<li routerLinkActive="active"
+			[routerLinkActiveOptions]="{ exact: true }">
+			<a class="no-padding" [routerLink]="['/registration']" >
+				<i class="header-icon material-icons icon-padding left-align">device_hub</i>
+				{{ 'HeaderComponent-ADD_ORGANIZATION_LINK' | translate }}
+			</a>
+		</li>
+		<li>
+			<div class="divider"></div>
+		</li>
+
+		<div>
+			<ul>
+				<li class="center-align">{{ 'SideNavComponent-HOW_TO_USE_SITE' | translate }}</li>
+				<li class="icon-padding sr-bold">{{ 'SideNavComponent-ARE_YOU_TITLE' | translate }}:</li>
+
+				<li><a routerLink="/help/faq/donor" class="no-padding"><i class="header-icon material-icons icon-padding left-align">attach_money</i>
+				{{ 'SideNavComponent-DONOR_LINK' | translate }}</a></li>
+
+				<li><a routerLink="/help/faq/media" class="no-padding"><i class="header-icon material-icons icon-padding left-align">settings_input_antenna</i>
+				{{ 'SideNavComponent-MEDIA_LINK' | translate }}</a></li>
+
+				<li><a routerLink="/help/faq/survivor" class="no-padding"><i class="header-icon material-icons icon-padding left-align">person</i>
+				{{ 'SideNavComponent-DISASATER_SURVIVOR_LINK' | translate }}</a></li>
+
+				<li><a routerLink="/help/faq/org" class="no-padding"><i class="header-icon material-icons icon-padding left-align">local_hospital</i>
+				{{ 'SideNavComponent-AID_ORGANIZATION_LINK' | translate }}</a></li>
+
+				<li><a routerLink="/help/faq/gov" class="no-padding"><i class="header-icon material-icons icon-padding left-align">account_balance</i>
+				{{ 'SideNavComponent-GOVERNMENT_LINK' | translate }}</a></li>
+
+			</ul>
+		</div>
+
+	</template>
+
+	<template [ngIf]="authService.isLoggedIn">
+		<li>
+			<div class="black-text center username sr-bold">
+				{{authService.getProfile().firstName}} {{authService.getProfile().lastName}}
+			</div>
+
+			<div class="black-text center lastLogin-text">
+				<div class="sr-bold last-login-field"> {{'DashboardComponent-LAST-LOGIN-TITLE' | translate}}</div>
+
+				<div class="last-login-field">{{authService.getProfile().lastLoginTime | date: AppSettings.DEFAULT_ANGULAR_DATE_AND_TIME_FORMAT}}</div>
+			</div>
+		</li>
+
+		<li>
+			<div class="divider"></div>
+		</li>
+
+		<li *ngIf="inDashboardRoute">
+			<a [routerLink]="['']" class="no-padding">
+				<i class="header-icon material-icons icon-padding left-align">home</i>
+				{{ 'HeaderComponent-HOME_LINK' | translate }}
+			</a>
+		</li>
+
+		<li *ngIf="!inDashboardRoute">
+			<a [routerLink]="['dashboard']" class="no-padding">
+				<i class="header-icon material-icons icon-padding left-align">assignment_ind</i>
+				{{ 'HeaderComponent-DASHBOARD_LINK' | translate }}
+			</a>
+		</li>
+		<li>
+			<a class="hover-effect no-padding" (click)="authService.logout()" >
+				<i class="header-icon material-icons icon-padding left-align">lock_open</i>
+				{{ 'HeaderComponent-LOGOUT_LINK' | translate }}
+			</a>
+		</li>
+
+		<li>
+			<div class="divider"></div>
+		</li>
+
+		<li>
+			<a
+
+					class="waves-effect waves-teal no-padding"
+					[routerLink]="['/dashboard']"
+					routerLinkActive="grey lighten-2"
+					[routerLinkActiveOptions]="{ exact: true }">
+				<i class="header-icon material-icons icon-padding left-align">dashboard</i>
+				<span class="navBtn">{{'DashboardComponent-DASHBOARD-NAVIGATION' | translate}}</span>
+			</a>
+		</li>
+
+		<template [ngIf]="authService.isSuper()">
+			<li>
+				<a
+
+						class="waves-effect waves-teal no-padding"
+						[routerLink]="['/dashboard/organizations']"
+						routerLinkActive="grey lighten-2"
+						[routerLinkActiveOptions]="{ exact: false }">
+					<i class="header-icon material-icons icon-padding left-align">device_hub</i>
+					<span class="navBtn">{{'DashboardComponent-ORG-NAVIGATION' | translate}}</span>
+				</a>
+			</li>
+			<li>
+				<a
+
+						class="waves-effect waves-teal no-padding"
+						[routerLink]="['/dashboard/disasters']"
+						routerLinkActive="grey lighten-2"
+						[routerLinkActiveOptions]="{ exact: false }">
+					<i class="header-icon material-icons icon-padding left-align">whatshot</i>
+					<span class="navBtn">{{'DashboardComponent-DISASTER-NAVIGATION' | translate}}</span>
+				</a>
+			</li>
+			<li>
+				<a
+
+						class="waves-effect waves-teal no-padding"
+						[routerLink]="['/dashboard/services']"
+						routerLinkActive="grey lighten-2"
+						[routerLinkActiveOptions]="{ exact: false }">
+					<i class="header-icon material-icons icon-padding left-align">airline_seat_individual_suite</i>
+					<span class="navBtn">{{'DashboardComponent-SERVICES-NAVIGATION' | translate}}</span>
+				</a>
+			</li>
+			<li>
+				<a
+
+						class="waves-effect waves-teal no-padding"
+						[routerLink]="['/dashboard/countries']"
+						routerLinkActive="grey lighten-2"
+						[routerLinkActiveOptions]="{ exact: false }">
+					<i class="header-icon material-icons icon-padding left-align">flag</i>
+					<span class="navBtn">{{'DashboardComponent-COUNTRY-NAVIGATION' | translate}}</span>
+				</a>
+			</li>
+			<li>
+				<a
+
+						class="waves-effect waves-teal no-padding"
+						[routerLink]="['/dashboard/configure-lists']"
+						routerLinkActive="grey lighten-2"
+						[routerLinkActiveOptions]="{ exact: false }">
+					<i class="header-icon material-icons icon-padding left-align">list</i>
+					<span class="navBtn">{{'DashboardComponent-LISTS-NAVIGATION' | translate}}</span>
+				</a>
+			</li>
+			<li>
+				<a
+
+						class="waves-effect waves-teal no-padding"
+						[routerLink]="['/dashboard/messages']"
+						routerLinkActive="grey lighten-2"
+						[routerLinkActiveOptions]="{ exact: false }">
+					<i class="header-icon material-icons icon-padding left-align">textsms</i>
+					<span class="navBtn">{{'DashboardComponent-MESSAGES' | translate}}</span>
+				</a>
+			</li>
+		</template>
+		<template [ngIf]="authService.isOrgGeneral() || authService.isSuper()">
+			<li>
+				<a
+
+						class="waves-effect waves-teal no-padding"
+						[routerLink]="['/dashboard/users']"
+						routerLinkActive="grey lighten-2"
+						[routerLinkActiveOptions]="{ exact: false }">
+					<i class="header-icon material-icons icon-padding left-align">group</i>
+					<span class="navBtn">{{'DashboardComponent-USER-MGMT-NAVIGATION' | translate}}</span>
+				</a>
+			</li>
+		</template>
+		<li>
+			<a
+
+					class="waves-effect waves-teal no-padding"
+					[routerLink]="['/dashboard/change-password']"
+					routerLinkActive="grey lighten-2"
+					[routerLinkActiveOptions]="{ exact: false }">
+				<i class="header-icon material-icons icon-padding left-align">perm_identity</i>
+				<span class="navBtn">{{'DashboardComponent-CHANGE_PASSWORD' | translate}}</span>
+			</a>
+		</li>
+	</template>
+</ul>
+
+<languageSelector></languageSelector>
+</body>
