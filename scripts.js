@@ -24,7 +24,11 @@ $(document).ready(function () {
     sendMsg(4);
   })
 
-  //myStorage.removeItem("events"); // TODO: remove this when done.
+  $('#btn5').on('click', function (e) {
+    sendMsg(5);
+  })
+
+  myStorage.removeItem("events"); // TODO: remove this when done.
   var evt = myStorage.getItem("events");
 
   //alert(evt);
@@ -75,6 +79,14 @@ $(document).ready(function () {
       "completed": false
     });
 
+    evt["events"].push({
+      "id": 5,
+      "title": 'Happy 40th #3',
+      "msg": 'Cancun &#x1F3d6; &#x1F3d6;',
+      "dt": '',
+      "completed": false
+    });
+
     myStorage.setItem("events", JSON.stringify(evt));
   }
 
@@ -104,7 +116,7 @@ function sendMsg(msgId) {
     data: {
       token: "amez7f12nfwjvh87a5w7cbopta8x3y",
       user: "uxXTPRem9FvhXU3jyiD1GhgYDoQQmF",
-      device: "surabhi_iphone",
+      device: "govind_iphone",
       title: evt.title,
       message: evt.msg,
       sound: "echo",
