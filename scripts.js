@@ -1,4 +1,5 @@
 var myStorage;
+var myEventList;
 
 $(document).ready(function () {
 
@@ -7,53 +8,58 @@ $(document).ready(function () {
 
   myStorage = window.localStorage;
 
-  $('#btnSend').on('click', function (e) {
-    sendCustomMsg();
+  $('#btnAdd').on('click', function (e) {
+    addMsg();
   })
 
-  $('#btn0').on('click', function (e) {
-    sendMsg(0);
+  $('#eventTable').on('click', '.send-btn', function(){
+    var id = $(this).attr('id').replace('btn', '');
+    sendMsg(id);
   })
 
-  $('#btn1').on('click', function (e) {
-    sendMsg(1);
-  })
-
-  $('#btn2').on('click', function (e) {
-    sendMsg(2);
-  })
-
-  $('#btn3').on('click', function (e) {
-    sendMsg(3);
-  })
-
-  $('#btn4').on('click', function (e) {
-    sendMsg(4);
-  })
-
-  $('#btn5').on('click', function (e) {
-    sendMsg(5);
-  })
+  // $('#btn0').on('click', function (e) {
+  //   sendMsg(0);
+  // })
+  //
+  // $('#btn1').on('click', function (e) {
+  //   sendMsg(1);
+  // })
+  //
+  // $('#btn2').on('click', function (e) {
+  //   sendMsg(2);
+  // })
+  //
+  // $('#btn3').on('click', function (e) {
+  //   sendMsg(3);
+  // })
+  //
+  // $('#btn4').on('click', function (e) {
+  //   sendMsg(4);
+  // })
+  //
+  // $('#btn5').on('click', function (e) {
+  //   sendMsg(5);
+  // })
 
   //myStorage.removeItem("events"); // TODO: remove this when done.
-  var evt = myStorage.getItem("events");
+  myEventList = myStorage.getItem("events");
 
   //alert(evt);
-  if (evt == null) {
+  if (myEventList == null) {
     // First time setup
     var eventList = '{"events": []}';
 
-    var evt = JSON.parse(eventList);
+    myEventList = JSON.parse(eventList);
 
-    evt["events"].push({
+    myEventList["events"].push({
       "id": 0,
       "title": 'Hey!',
-      "msg": 'Its 10 days to your special day, expact a load of surprises till you get to 31st &#x1F60D; &#x1F60D;',
+      "msg": 'Its 10 days to your special day, expect a load of surprises till you get to 31st &#x1F60D; &#x1F60D;',
       "dt": '1503356547103',
       "completed": true
     });
 
-    evt["events"].push({
+    myEventList["events"].push({
       "id": 1,
       "title": 'Happy 40th #1',
       "msg": 'Let\'s begin with a dinner tonight at one of our all time favorite place &#x1F372;',
@@ -61,7 +67,7 @@ $(document).ready(function () {
       "completed": true
     });
 
-    evt["events"].push({
+    myEventList["events"].push({
       "id": 2,
       "title": 'Hey!',
       "msg": 'It\'s going to be a &#x1F3d6;',
@@ -69,7 +75,7 @@ $(document).ready(function () {
       "completed": true
     });
 
-    evt["events"].push({
+    myEventList["events"].push({
       "id": 3,
       "title": 'Happy 40th #2',
       "msg": 'How about trying out a place of your choice today for &#x1F35B;',
@@ -77,7 +83,7 @@ $(document).ready(function () {
       "completed": true
     });
 
-    evt["events"].push({
+    myEventList["events"].push({
       "id": 4,
       "title": 'Hey!',
       "msg": 'Get ready for a memorable trip &#x2708; &#x2708;',
@@ -85,7 +91,7 @@ $(document).ready(function () {
       "completed": true
     });
 
-    evt["events"].push({
+    myEventList["events"].push({
       "id": 5,
       "title": 'Happy 40th #3',
       "msg": 'Cancun &#x1F3d6; &#x1F3d6; &#x1F378; &#x1F378;!!',
@@ -93,8 +99,10 @@ $(document).ready(function () {
       "completed": true
     });
 
-    myStorage.setItem("events", JSON.stringify(evt));
+    myStorage.setItem("events", JSON.stringify(myEventList));
   }
+
+  showEventList();
 
   // Set time sent on UI
   evt = myStorage.getItem("events");
@@ -111,16 +119,38 @@ $(document).ready(function () {
   });
 });
 
-function sendCustomMsg() {
-  alert('here');
+function showEventList() {
+  let evtList = JSON.parse(myStorage.getItem("events"));
+  console.log('in showEventList');
+  $('#eventTable').empty();
+
+  $.each(evtList["events"], function(index, e) {
+    console.log(JSON.stringify(e));
+    let rowHTML = '<tr>';
+    rowHTML = rowHTML + '<td>' + index + '</td>';
+    rowHTML = rowHTML + '<td><button id="btn' + index + '" type="button" class="btn btn-primary send-btn">Send</button></td>';
+    rowHTML = rowHTML + '<td><span id="dt' + index + '">&nbsp;</span></td></tr>';
+    $('#eventTable').append(rowHTML);
+  });
+}
+
+function addMsg() {
   let msgTitle = $("#msg-title").val();
   let msgText =  $("#msg-text").val();
 
-  alert(msgTitle);
-  alert(msgText);
-
   if(msgTitle && msgText) {
+    let evtList = JSON.parse(myStorage.getItem("events"));
+    let index = evtList["events"].length;
 
+    evtList["events"].push({
+      "id": index,
+      "title": msgTitle,
+      "msg": msgText,
+      "dt": '',
+      "completed": false
+    });
+
+    myStorage.setItem("events", JSON.stringify(evtList));
   }
 }
 
@@ -144,7 +174,8 @@ function sendMsg(msgId) {
     },
     success: function() {
       //$('status').text("ff");
-      alert('success');
+      //alert('success');
+      $("#alert-success").show();
       evt.completed = "true";
       evt.dt = Date.now();
       $('#dt' + msgId).text(evt.dt.toLocaleString());
@@ -154,12 +185,13 @@ function sendMsg(msgId) {
     },
   })
   .done(function() {
-    alert('done');
+    //alert('done');
   })
   .fail(function() {
-    alert('fail');
+    //alert('fail');
+    $("#alert-error").show();
   })
   .always(function() {
-    alert('always');
+    //alert('always');
   });
 }
