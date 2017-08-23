@@ -95,7 +95,8 @@ $(document).ready(function () {
   let eList = JSON.parse(evt);
   $.each(eList["events"], function(index, e) {
     if(e.completed) {
-      $('#dt' + index).text(e.dt);
+      let dt = new Date(parseFloat(e.dt));
+      $('#dt' + index).text(dt.toLocaleString());
       $('#btn' + index).prop("disabled", true);
       $('#btn' + index).addClass("disabled");
     } else {
