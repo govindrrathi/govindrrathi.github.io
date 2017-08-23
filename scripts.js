@@ -2,7 +2,14 @@ var myStorage;
 
 $(document).ready(function () {
 
+  $("#alert-success").hide();
+  $("#alert-error").hide();
+
   myStorage = window.localStorage;
+
+  $('#btnSend').on('click', function (e) {
+    sendCustomMsg();
+  })
 
   $('#btn0').on('click', function (e) {
     sendMsg(0);
@@ -33,7 +40,6 @@ $(document).ready(function () {
 
   //alert(evt);
   if (evt == null) {
-    console.log("add items..");
     // First time setup
     var eventList = '{"events": []}';
 
@@ -105,6 +111,19 @@ $(document).ready(function () {
   });
 });
 
+function sendCustomMsg() {
+  alert('here');
+  let msgTitle = $("#msg-title").val();
+  let msgText =  $("#msg-text").val();
+
+  alert(msgTitle);
+  alert(msgText);
+
+  if(msgTitle && msgText) {
+
+  }
+}
+
 function sendMsg(msgId) {
 
   let evtList = JSON.parse(myStorage.getItem("events"));
@@ -117,7 +136,7 @@ function sendMsg(msgId) {
     data: {
       token: "amez7f12nfwjvh87a5w7cbopta8x3y",
       user: "uxXTPRem9FvhXU3jyiD1GhgYDoQQmF",
-      device: "surabhi_iphone",
+      device: "govind_iphone",
       title: evt.title,
       message: evt.msg,
       sound: "echo",
@@ -128,7 +147,7 @@ function sendMsg(msgId) {
       alert('success');
       evt.completed = "true";
       evt.dt = Date.now();
-      $('#dt' + msgId).text(evt.dt);
+      $('#dt' + msgId).text(evt.dt.toLocaleString());
       $('#btn' + msgId).prop("disabled", true);
       $('#btn' + msgId).addClass("disabled");
       myStorage.setItem("events", JSON.stringify(evtList));
