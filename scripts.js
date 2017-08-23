@@ -59,32 +59,32 @@ $(document).ready(function () {
       "id": 2,
       "title": 'Hey!',
       "msg": 'It\'s going to be a &#x1F3d6;',
-      "dt": '',
-      "completed": false
+      "dt": '1503444877633',
+      "completed": true
     });
 
     evt["events"].push({
       "id": 3,
       "title": 'Happy 40th #2',
       "msg": 'How about trying out a place of your choice today for &#x1F35B;',
-      "dt": '',
-      "completed": false
+      "dt": '1503445404326',
+      "completed": true
     });
 
     evt["events"].push({
       "id": 4,
       "title": 'Hey!',
       "msg": 'Get ready for a memorable trip &#x2708; &#x2708;',
-      "dt": '',
-      "completed": false
+      "dt": '1503459624417',
+      "completed": true
     });
 
     evt["events"].push({
       "id": 5,
       "title": 'Happy 40th #3',
       "msg": 'Cancun &#x1F3d6; &#x1F3d6; &#x1F378; &#x1F378;!!',
-      "dt": '',
-      "completed": false
+      "dt": '1503459943032',
+      "completed": true
     });
 
     myStorage.setItem("events", JSON.stringify(evt));
