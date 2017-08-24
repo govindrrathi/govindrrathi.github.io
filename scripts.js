@@ -10,6 +10,7 @@ $(document).ready(function () {
 
   $('#btnAdd').on('click', function (e) {
     addMsg();
+    showEventList();
   })
 
   $('#eventTable').on('click', '.send-btn', function(){
@@ -125,10 +126,12 @@ function showEventList() {
   $('#eventTable').empty();
 
   $.each(evtList["events"], function(index, e) {
-    console.log(JSON.stringify(e));
+    //console.log(JSON.stringify(e));
     let rowHTML = '<tr>';
-    rowHTML = rowHTML + '<td>' + index + '</td>';
+    rowHTML = rowHTML + '<td>' + (index + 1) + '</td>';
     rowHTML = rowHTML + '<td><button id="btn' + index + '" type="button" class="btn btn-primary send-btn">Send</button></td>';
+    rowHTML = rowHTML + '<td><span>' +  e.title + '</span></td>';
+    rowHTML = rowHTML + '<td><span>' +  e.msg + '</span></td>';
     rowHTML = rowHTML + '<td><span id="dt' + index + '">&nbsp;</span></td></tr>';
     $('#eventTable').append(rowHTML);
   });
@@ -178,7 +181,8 @@ function sendMsg(msgId) {
       $("#alert-success").show();
       evt.completed = "true";
       evt.dt = Date.now();
-      $('#dt' + msgId).text(evt.dt.toLocaleString());
+      let dt = new Date(parseFloat(evt.dt));
+      $('#dt' + msgId).text(dt.toLocaleString());
       $('#btn' + msgId).prop("disabled", true);
       $('#btn' + msgId).addClass("disabled");
       myStorage.setItem("events", JSON.stringify(evtList));
