@@ -118,11 +118,10 @@ function showEventList() {
 
     let rowHTML = '<tr>';
     rowHTML = rowHTML + '<td>' + (index + 1) + '</td>';
-    rowHTML = rowHTML + '<td><button id="btn' + index + '" type="button" class="btn btn-primary send-btn">Send</button></td>';
+    rowHTML = rowHTML + '<td><p><button id="btn' + index + '" type="button" class="btn btn-primary send-btn">Send</button></p><p><button id="del' + index + '" type="button" class="btn btn-primary del-btn">Remove</button></p></td>';
     rowHTML = rowHTML + '<td><span>' +  e.title + '</span></td>';
     rowHTML = rowHTML + '<td><span>' +  e.msg + '</span></td>';
     rowHTML = rowHTML + '<td><span id="dt' + index + '">&nbsp;</span></td>';
-    rowHTML = rowHTML + '<td><button id="del' + index + '" type="button" class="btn btn-primary del-btn">Remove</button></td>';
     rowHTML = rowHTML + '</tr>';
 
     $('#eventTable').append(rowHTML);
