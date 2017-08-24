@@ -83,6 +83,22 @@ $(document).ready(function () {
       "completed": true
     });
 
+    myEventList["events"].push({
+      "id": 6,
+      "title": 'Happy 40th #4',
+      "msg": 'Something that may help you when you are awake late in the night, which does happen frequently &#x1F603;, stay tuned...',
+      "dt": '',
+      "completed": false
+    });
+
+    myEventList["events"].push({
+      "id": 7,
+      "title": 'Happy 40th #5',
+      "msg": 'This may come in handy when you are getting ready for parties, just wait a little while...',
+      "dt": '',
+      "completed": false
+    });
+
     myStorage.setItem("events", JSON.stringify(myEventList));
   }
 
