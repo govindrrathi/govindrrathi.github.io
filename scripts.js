@@ -11,6 +11,7 @@ $(document).ready(function () {
   $('#btnAdd').on('click', function (e) {
     addMsg();
     showEventList();
+    showSentTimes();
   })
 
   $('#eventTable').on('click', '.send-btn', function(){
@@ -104,7 +105,10 @@ $(document).ready(function () {
   }
 
   showEventList();
+  showSentTimes();
+});
 
+function showSentTimes() {
   // Set time sent on UI
   evt = myStorage.getItem("events");
   let eList = JSON.parse(evt);
@@ -118,7 +122,7 @@ $(document).ready(function () {
       $('#dt' + index).text('Not Set');
     }
   });
-});
+}
 
 function showEventList() {
   let evtList = JSON.parse(myStorage.getItem("events"));
