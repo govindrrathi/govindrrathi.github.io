@@ -188,7 +188,7 @@ function sendMsg(msgId) {
     data: {
       token: "amez7f12nfwjvh87a5w7cbopta8x3y",
       user: "uxXTPRem9FvhXU3jyiD1GhgYDoQQmF",
-      device: "govind_iphone",
+      device: "govind_iphone,surabhi_iphone",
       title: evt.title,
       message: evt.msg,
       sound: "echo",
