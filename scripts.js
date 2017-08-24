@@ -19,34 +19,16 @@ $(document).ready(function () {
     sendMsg(id);
   })
 
-  // $('#btn0').on('click', function (e) {
-  //   sendMsg(0);
-  // })
-  //
-  // $('#btn1').on('click', function (e) {
-  //   sendMsg(1);
-  // })
-  //
-  // $('#btn2').on('click', function (e) {
-  //   sendMsg(2);
-  // })
-  //
-  // $('#btn3').on('click', function (e) {
-  //   sendMsg(3);
-  // })
-  //
-  // $('#btn4').on('click', function (e) {
-  //   sendMsg(4);
-  // })
-  //
-  // $('#btn5').on('click', function (e) {
-  //   sendMsg(5);
-  // })
+  $('#eventTable').on('click', '.del-btn', function(){
+    var id = $(this).attr('id').replace('del', '');
+    removeMsg(id);
+    showEventList();
+    showSentTimes();
+  })
 
   //myStorage.removeItem("events"); // TODO: remove this when done.
   myEventList = myStorage.getItem("events");
 
-  //alert(evt);
   if (myEventList == null) {
     // First time setup
     var eventList = '{"events": []}';
@@ -118,6 +100,9 @@ function showSentTimes() {
       $('#dt' + index).text(dt.toLocaleString());
       $('#btn' + index).prop("disabled", true);
       $('#btn' + index).addClass("disabled");
+
+      $('#del' + index).prop("disabled", true);
+      $('#del' + index).addClass("disabled");
     } else {
       $('#dt' + index).text('Not Set');
     }
@@ -126,17 +111,20 @@ function showSentTimes() {
 
 function showEventList() {
   let evtList = JSON.parse(myStorage.getItem("events"));
-  console.log('in showEventList');
+
   $('#eventTable').empty();
 
   $.each(evtList["events"], function(index, e) {
-    //console.log(JSON.stringify(e));
+
     let rowHTML = '<tr>';
     rowHTML = rowHTML + '<td>' + (index + 1) + '</td>';
     rowHTML = rowHTML + '<td><button id="btn' + index + '" type="button" class="btn btn-primary send-btn">Send</button></td>';
     rowHTML = rowHTML + '<td><span>' +  e.title + '</span></td>';
     rowHTML = rowHTML + '<td><span>' +  e.msg + '</span></td>';
-    rowHTML = rowHTML + '<td><span id="dt' + index + '">&nbsp;</span></td></tr>';
+    rowHTML = rowHTML + '<td><span id="dt' + index + '">&nbsp;</span></td>';
+    rowHTML = rowHTML + '<td><button id="del' + index + '" type="button" class="btn btn-primary del-btn">Remove</button></td>';
+    rowHTML = rowHTML + '</tr>';
+
     $('#eventTable').append(rowHTML);
   });
 }
@@ -160,6 +148,18 @@ function addMsg() {
     myStorage.setItem("events", JSON.stringify(evtList));
   }
 }
+function removeMsg(msgId) {
+  let evtList = JSON.parse(myStorage.getItem("events"));
+  let evt = evtList["events"][msgId];
+
+  if(!evt.completed) {
+    evtList["events"] = evtList["events"].filter(function(e) {
+      return e.id != evt.id
+    })
+  };
+
+  myStorage.setItem("events", JSON.stringify(evtList));
+}
 
 function sendMsg(msgId) {
 
@@ -180,8 +180,6 @@ function sendMsg(msgId) {
       html: 1
     },
     success: function() {
-      //$('status').text("ff");
-      //alert('success');
       $("#alert-success").show();
       evt.completed = "true";
       evt.dt = Date.now();
@@ -189,6 +187,8 @@ function sendMsg(msgId) {
       $('#dt' + msgId).text(dt.toLocaleString());
       $('#btn' + msgId).prop("disabled", true);
       $('#btn' + msgId).addClass("disabled");
+      $('#del' + msgId).prop("disabled", true);
+      $('#del' + msgId).addClass("disabled");
       myStorage.setItem("events", JSON.stringify(evtList));
     },
   })
